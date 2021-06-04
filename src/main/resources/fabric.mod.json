@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "scaffoldforever",
+  "version": "${version}",
+
+  "name": "Scaffold Forever",
+  "description": "Place scaffold horizontally forever.",
+  "authors": [
+    "HughBone"
+  ],
+  "contact": {
+    "homepage": "",
+    "issues": "https://github.com/HughBone/scaffold-forever/issues",
+    "sources": "https://github.com/HughBone/scaffold-forever"
+  },
+
+  "license": "MIT",
+  "icon": "assets/modid/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.hughbone.scaffoldforever.ScaffoldForever"
+    ]
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
