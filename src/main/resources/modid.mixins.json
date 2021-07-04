@@ -4,7 +4,8 @@
   "package": "com.hughbone.scaffoldforever.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ScaffoldMixin"
+    "ScaffoldMixin",
+    "BlockMixin"
   ],
   "client": [
   ],
