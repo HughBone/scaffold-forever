@@ -21,7 +21,6 @@ public class BlockMixin {
 
         if (state.getBlock().equals(Blocks.SCAFFOLDING)) {
 
-            // Break scaffold chain if there is scaffolding above
             BlockPos yplus = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
             BlockPos xplus = new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ());
             BlockPos xneg = new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ());
@@ -34,12 +33,8 @@ public class BlockMixin {
                 List<BlockPos> calledAlready = new ArrayList<>();
                 if (world.getBlockState(bp).getBlock().equals(Blocks.SCAFFOLDING)) {
                     if (!isConnectedToGround(bp, world, calledAlready)) {
-                        System.out.println("Not connected to ground!");
                         calledAlready.clear();
                         breakScaffoldChain(bp, world, calledAlready);
-                    }
-                    else {
-                        System.out.println("Connected to ground!");
                     }
                 }
             }
