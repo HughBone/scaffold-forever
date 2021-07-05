@@ -3,7 +3,11 @@ package com.hughbone.scaffoldforever.mixin;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,7 +38,7 @@ public class BlockMixin {
                 if (world.getBlockState(bp).getBlock().equals(Blocks.SCAFFOLDING)) {
                     if (!isConnectedToGround(bp, world, calledAlready)) {
                         calledAlready.clear();
-                        breakScaffoldChain(bp, world, calledAlready);
+                        breakScaffoldChain(bp, world, calledAlready, bp);
                     }
                 }
             }
@@ -42,12 +46,18 @@ public class BlockMixin {
 
     }
 
-    private void breakScaffoldChain(BlockPos pos, WorldAccess world, List<BlockPos> calledAlready) {
+    private void breakScaffoldChain(BlockPos pos, WorldAccess world, List<BlockPos> calledAlready, BlockPos defaultBlockPos) {
         if (calledAlready.contains(pos)) {
             return;
         }
         calledAlready.add(pos);
-        world.breakBlock(pos, true);
+        world.breakBlock(pos, false);
+
+        ItemEntity itemEntity = new ItemEntity(EntityType.ITEM, (World) world);
+        itemEntity.setStack(Items.SCAFFOLDING.getDefaultStack());
+        itemEntity.getStack().setCount(1);
+        itemEntity.setPosition(defaultBlockPos.getX(), defaultBlockPos.getY(), defaultBlockPos.getZ());
+        world.spawnEntity(itemEntity);
 
         BlockPos xplus = new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ());
         BlockPos xneg = new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ());
@@ -65,9 +75,8 @@ public class BlockMixin {
         }
 
         for (BlockPos bp : adjascentList) {
-            breakScaffoldChain(bp, world, calledAlready);
+            breakScaffoldChain(bp, world, calledAlready, defaultBlockPos);
         }
-
 
     }
 
@@ -107,5 +116,6 @@ public class BlockMixin {
 
         return false;
     }
+
 
 }
