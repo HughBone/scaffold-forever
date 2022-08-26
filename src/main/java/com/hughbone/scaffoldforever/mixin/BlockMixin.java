@@ -77,7 +77,6 @@ public class BlockMixin {
         for (BlockPos bp : adjascentList) {
             breakScaffoldChain(bp, world, calledAlready, defaultBlockPos);
         }
-
     }
 
     private boolean isConnectedToGround(BlockPos pos, WorldAccess world, List<BlockPos> calledAlready) {
@@ -116,6 +115,5 @@ public class BlockMixin {
 
         return false;
     }
-
 
 }

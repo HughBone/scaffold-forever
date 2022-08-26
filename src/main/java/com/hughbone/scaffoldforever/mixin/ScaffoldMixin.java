@@ -8,9 +8,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Random;
-
-
 @Mixin(ScaffoldingBlock.class)
 public abstract class ScaffoldMixin extends Block {
 
@@ -19,7 +16,7 @@ public abstract class ScaffoldMixin extends Block {
     }
 
     @Inject(method = "scheduledTick", at = @At("HEAD"), cancellable = true)
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, net.minecraft.util.math.random.Random random, CallbackInfo ci) {
         ci.cancel();
     }
 
